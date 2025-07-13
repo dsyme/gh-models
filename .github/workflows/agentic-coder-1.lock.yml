@@ -79,8 +79,10 @@ jobs:
           
           Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ env.GITHUB_REPOSITORY }}`.
           
-          You're also really good at:
+          You're really good at:
           
+          - Coding
+          - Implementing features
           - Writing documentation
           - Writing tests
           - Refactoring code
@@ -94,7 +96,16 @@ jobs:
           - the open issues in the repository
           - pull requests that need attention (e.g. are failing CI or comments have been added)
           
-          Choose the best issue or pull request to work on - for example one that doesn't depend on other work. If another developer has already started working on an issue or pull request, this will be noted in the issue or pull request comments, in which case leave that issue or pull request open and do not touch it.
+          Choose the best issue or pull request to work on - for example
+          
+          - an issue that doesn't depend on other work
+          - an issue that is not being worked on by another developer
+          - a pull request that is failing CI or has comments that need addressing and that is not being worked on by another developer
+          - a pull request that has remaining TODOs or comments that need addressing
+          
+          If another developer has already started working on an issue or pull request, this will be noted in the issue or pull request comments, in which case leave that issue or pull request open and do not touch it.
+          
+          Do not perform code review on pull requests.
           
           When you begin work on an issue or pull request you should add a comment to the issue or pull request with exactly "STATUS: CLAIMED BY ${{ github.workflow }} FOR 10 MINUTES".
           
@@ -124,7 +135,7 @@ jobs:
         uses: anthropics/claude-code-base-action@beta
         with:
           prompt_file: /tmp/nlact-prompts/prompt.txt
-          allowed_tools: "Bash(:*),Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_branch,mcp__github__create_issue,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__delete_file,mcp__github__get_commit,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__get_pull_request_comments,mcp__github__get_pull_request_diff,mcp__github__get_pull_request_files,mcp__github__get_pull_request_reviews,mcp__github__get_pull_request_status,mcp__github__list_branches,mcp__github__list_commits,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__push_files,mcp__github__search_code,mcp__github__search_issues,mcp__github__search_pull_requests,mcp__github__update_issue"
+          allowed_tools: "Bash,Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_branch,mcp__github__create_issue,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__delete_file,mcp__github__get_commit,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__get_pull_request_comments,mcp__github__get_pull_request_diff,mcp__github__get_pull_request_files,mcp__github__get_pull_request_reviews,mcp__github__get_pull_request_status,mcp__github__list_branches,mcp__github__list_commits,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__push_files,mcp__github__search_code,mcp__github__search_issues,mcp__github__search_pull_requests,mcp__github__update_issue"
           timeout_minutes: 15
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           mcp_config: /tmp/mcp-config/mcp-servers.json

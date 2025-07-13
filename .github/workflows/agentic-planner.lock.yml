@@ -97,7 +97,7 @@ jobs:
         uses: anthropics/claude-code-base-action@beta
         with:
           prompt_file: /tmp/nlact-prompts/prompt.txt
-          allowed_tools: "Bash(gh:*),Bash(git:*),Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_issue,mcp__github__create_issue_comment,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__search_code,mcp__github__search_issues,mcp__github__update_issue"
+          allowed_tools: "Bash,Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_issue,mcp__github__create_issue_comment,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__search_code,mcp__github__search_issues,mcp__github__update_issue"
           timeout_minutes: 15
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           mcp_config: /tmp/mcp-config/mcp-servers.json
