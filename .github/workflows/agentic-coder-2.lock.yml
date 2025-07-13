@@ -112,6 +112,8 @@ jobs:
           
           > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
           
+          > NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to.
+          
           Include a link like this at the end of each new issue, issue comment or pull request you create:
           
           ```markdown

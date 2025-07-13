@@ -117,6 +117,8 @@ jobs:
           
           If you spot problems, either create a new issue, or comment on an existing issue, or create a pull request to fix the problem.
           
+          > NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to.
+          
           Include a link like this at the end of each new issue created or issue comment made:
           
           ```

@@ -111,6 +111,8 @@ jobs:
           
           If you spot problems, either create a new issue, or comment on an existing issue, or create a pull request to fix the problem.
           
+          > NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to.
+          
           Include a link like this at the end of each new issue created or issue comment made:
           
           ```
@@ -121,7 +123,7 @@ jobs:
         uses: anthropics/claude-code-base-action@beta
         with:
           prompt_file: /tmp/nlact-prompts/prompt.txt
-          allowed_tools: "Bash(:*),Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__bash__gh api -X PATCH /repos/${{ github.repository }}/issues/comments/:*,mcp__github__add_issue_comment,mcp__github__create_branch,mcp__github__create_issue,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__delete_file,mcp__github__get_commit,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__get_pull_request_diff,mcp__github__get_pull_request_files,mcp__github__get_pull_request_status,mcp__github__list_branches,mcp__github__list_commits,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__push_files,mcp__github__search_code,mcp__github__search_issues,mcp__github__update_issue"
+          allowed_tools: "Bash(:*),Bash(gh api -X PATCH /repos/${{ github.repository }}/issues/comments/:*),Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_branch,mcp__github__create_issue,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__delete_file,mcp__github__get_commit,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__get_pull_request_diff,mcp__github__get_pull_request_files,mcp__github__get_pull_request_status,mcp__github__list_branches,mcp__github__list_commits,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__push_files,mcp__github__search_code,mcp__github__search_issues,mcp__github__update_issue"
           timeout_minutes: 15
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           mcp_config: /tmp/mcp-config/mcp-servers.json
