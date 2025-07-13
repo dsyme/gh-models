@@ -1,0 +1,130 @@
+name: Agentic Coder 3 (Zeke)
+on:
+  schedule:
+    # Every 5 minutes
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  models: read
+  issues: write
+  pull-requests: write
+  discussions: write
+  actions: read
+  checks: read
+  statuses: read
+concurrency:
+  group: "nlact-.github/workflows/agentic-coder-3"
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup MCPs
+        run: |
+          mkdir -p /tmp/mcp-config
+          cat > /tmp/mcp-config/mcp-servers.json << 'EOF'
+          {
+            "mcpServers": {
+              "github": {
+                "command": "docker",
+                "args": [
+                  "run",
+                  "-i",
+                  "--rm",
+                  "-e",
+                  "GITHUB_PERSONAL_ACCESS_TOKEN",
+                  "ghcr.io/github/github-mcp-server:sha-7aced2b"
+                ],
+                "env": {
+                  "GITHUB_PERSONAL_ACCESS_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+                }
+              }
+            }
+          }
+          EOF
+      - name: Create prompt
+        run: |
+          mkdir -p /tmp/nlact-prompts
+          cat > /tmp/nlact-prompts/prompt.txt << 'EOF'
+          
+          # Agentic Coder 3 (Zeke)
+          
+          ## Components
+          
+          
+          ### Output Report implemented via GitHub Issue
+          
+          You will share one "output issue" with all other developers entitled "Team Status DATE" where DATE is the date, UTC time, UK date format DD/MM/YYYY. If an open issue with this title doesn't exist, create it with content describing what it's for. Ignore closed issues with this title.
+          
+          You and other team members will add comments to this issue as you progress. The comments will be used as the "output report" for the workflow.
+          
+          When you start your work, add an issue comment to the output issue saying you are starting work and briefly saying who you are and what you are doing.
+          
+          Before each tool use, add another issue comment saying you are starting work and briefly saying who you are, what you've done and what you are about to do.
+          
+          If you encounter a failure or don't have access to a tool, add a comment to the issue noting the problem, explaining what you would have done if you had access, and give your analysis of what needs to be fixed.
+          
+          At the end of the workflow, saying you are starting work and briefly saying who you are and what you did.
+          
+          Include this at the end of each added issue comment:
+          
+          ```
+          > AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
+          ```
+          
+          ## Job Description
+          
+          
+          Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ env.GITHUB_REPOSITORY }}`.
+          
+          You're also really good at:
+          
+          - Writing documentation
+          - Writing tests
+          - Refactoring code
+          - Fixing bugs
+          - Technical writing
+          - Education materials
+          - Marketing materials
+          
+          You will look at
+          
+          - the open issues in the repository
+          - pull requests that need attention (e.g. are failing CI or comments have been added)
+          
+          Choose the best issue or pull request to work on - for example one that doesn't depend on other work. If another developer has already started working on an issue or pull request, this will be noted in the issue or pull request comments, in which case leave that issue or pull request open and do not touch it.
+          
+          When you begin work on an issue or pull request you should add a comment to the issue or pull request with exactly "STATUS: CLAIMED BY ${{ github.workflow }} FOR 10 MINUTES".
+          
+          If you can't find any suitable issues or or pull requests to work on, just exit.
+          
+          Then perform all the steps to complete the issue or pull request. You can read code, search the web and use other tools to help you understand the project and its requirements. You can also use the GitHub MCP tools. If appropriate, create a pull request with your changes. Include a "Fixes #ISSUE-NUMBER" note in the pull request description.
+          
+          If you succeed with your work, add a new comment to the issue or pull request with exactly "STATUS: SUCCESS BY ${{ github.workflow }}". If you don't succeed in solving the issue or pull request, or hit an error, add a new comment with exactly "STATUS: CLAIM RELEASED BY ${{ github.workflow }}".
+          
+          > NOTE: If changes need to be made to .github/workflows, you won't be able to do that directly because of permissions restrictions in automated agents creating workflows on GitHub. Instead, create a pull request putting the new files under .github/workflows-new (leave the old ones unchanged). Mention this very clearly in your pull request.
+          
+          > NOTE: Never make direct pushes to the main branch. Always create a pull request.
+          
+          > NOTE: You are welcome to add comments to issues and or pull requests to ask for clarification.
+          
+          > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
+          
+          Include a link like this at the end of each new issue, issue comment or pull request you create:
+          
+          ```markdown
+          > AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
+          ```
+          EOF
+      - name: Run Claude Code
+        uses: anthropics/claude-code-base-action@beta
+        with:
+          prompt_file: /tmp/nlact-prompts/prompt.txt
+          allowed_tools: "Bash(:*),Edit,Glob,Grep,LS,MultiEdit,NotebookEdit,NotebookRead,Read,Task,WebFetch,WebSearch,Write,mcp__github__add_issue_comment,mcp__github__create_branch,mcp__github__create_issue,mcp__github__create_or_update_file,mcp__github__create_pull_request,mcp__github__delete_file,mcp__github__get_commit,mcp__github__get_file_contents,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__get_pull_request,mcp__github__get_pull_request_comments,mcp__github__get_pull_request_diff,mcp__github__get_pull_request_files,mcp__github__get_pull_request_reviews,mcp__github__get_pull_request_status,mcp__github__list_branches,mcp__github__list_commits,mcp__github__list_files,mcp__github__list_issues,mcp__github__list_pull_requests,mcp__github__push_files,mcp__github__search_code,mcp__github__search_issues,mcp__github__search_pull_requests,mcp__github__update_issue"
+          timeout_minutes: 15
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          mcp_config: /tmp/mcp-config/mcp-servers.json
+          claude_env: |
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
