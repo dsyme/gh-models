@@ -1,0 +1,6 @@
+Generate a JSON response with the following fields:
+- name (string): The person's full name
+- age (integer): The person's age in years
+- city (string): The city where the person lives
+
+The output should be valid JSON format and include all three fields.
