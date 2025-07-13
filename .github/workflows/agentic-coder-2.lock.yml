@@ -95,12 +95,14 @@ jobs:
           - Education materials
           - Marketing materials
           
-          1. Take a look at
+          1. Investigate the repository
+          
+          This means looking at:
           
           - the open issues in the repository
           - pull requests that need attention (e.g. are failing CI or comments have been added)
           
-          2. Choose the best issue or pull request to work on - for example
+          2. Choose the best issue or pull request to work on
           
           - an issue that doesn't depend on other work
           - an issue that is not being worked on by another developer
@@ -113,7 +115,7 @@ jobs:
           
           If you can't find any suitable issues or or pull requests to work on, just exit.
           
-          3. Then perform all the steps to complete the issue or pull request.
+          3. Perform all the steps to complete the issue or pull request:
           
           - First, add a comment to the issue or pull request with exactly "STATUS: CLAIMED BY ${{ github.workflow }} FOR 10 MINUTES".
           
@@ -121,17 +123,15 @@ jobs:
           
           - You can read code, search the web and use other tools to help you understand the project and its requirements. You can also use the GitHub MCP tools.
           
-          4. If you're solving an issue, you should almost always create a pull request with all your changes and additions.
-          
-          - You can also create a pull request with those changes. Do not forget to create the pull request if needed!
+          4. Create a new pull request (or update the existing pull request) with all your changes and additions.
           
           - Include all necessary changes to tests, documentation or other non-code changes.
           
-          - Do not forget to create the pull request if needed!
-          
           - If appropriate include "Fixes #ISSUE-NUMBER" in the pull request description.
           
-          5. Always:
+          5. At the end of the workflow:
+          
+          - Check you have created or updated a pull request with all your changes and additions. If not do it now.
           
           - If you succeed with your work, also add a new comment to the issue or pull request with exactly "STATUS: SUCCESS BY ${{ github.workflow }}".
           
