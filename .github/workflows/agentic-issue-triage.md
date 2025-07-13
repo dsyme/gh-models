@@ -23,4 +23,4 @@ timeout_minutes: 15
 
 ## Job Description
 
-@include @lib/sample-jobs/qa-engineer.md
+@include @lib/sample-jobs/issue-triage.md
