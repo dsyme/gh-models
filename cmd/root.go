@@ -10,6 +10,7 @@ import (
 	"github.com/cli/go-gh/v2/pkg/term"
 	"github.com/github/gh-models/cmd/eval"
 	"github.com/github/gh-models/cmd/list"
+	"github.com/github/gh-models/cmd/pex"
 	"github.com/github/gh-models/cmd/run"
 	"github.com/github/gh-models/cmd/view"
 	"github.com/github/gh-models/internal/azuremodels"
@@ -57,6 +58,7 @@ func NewRootCommand() *cobra.Command {
 
 	cmd.AddCommand(eval.NewEvalCommand(cfg))
 	cmd.AddCommand(list.NewListCommand(cfg))
+	cmd.AddCommand(pex.NewPexCommand(cfg))
 	cmd.AddCommand(run.NewRunCommand(cfg))
 	cmd.AddCommand(view.NewViewCommand(cfg))
 

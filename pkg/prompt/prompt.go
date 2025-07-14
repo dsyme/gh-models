@@ -148,3 +148,12 @@ func (f *File) BuildChatCompletionOptions(messages []azuremodels.ChatMessage) az
 
 	return req
 }
+
+// ToYAML converts the File struct to YAML format
+func (f *File) ToYAML() (string, error) {
+	data, err := yaml.Marshal(f)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
